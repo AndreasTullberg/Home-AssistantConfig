@@ -1,0 +1,14 @@
+- id: '1578865163548'
+  alias: turn on light when I am home
+  description: ''
+  trigger:
+  - entity_id: device_tracker.andreas_tullberg_iphone
+    event: enter
+    platform: zone
+    zone: zone.home
+  condition: []
+  action:
+  - device_id: 885606c5671d43548b337084c43a3676
+    domain: light
+    entity_id: light.taklampa_vardagsrum
+    type: turn_on

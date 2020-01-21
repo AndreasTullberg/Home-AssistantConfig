@@ -1,0 +1,87 @@
+title: Tullbergs Hem
+views:
+  - cards:
+      - cards:
+          - cards:
+              - entity: media_player.kok
+                type: media-control
+            type: vertical-stack
+          - cards:
+              - entity: weather.hem
+                type: weather-forecast
+            type: vertical-stack
+          - cards:
+              - entities:
+                  - entity: person.andreas_tullberg
+                  - entity: person.ulrikas
+                  - entity: person.douglas
+                  - entity: person.elsa
+                title: Familjen
+                type: glance
+              - entities:
+                  - entity: sensor.xiaomi_vardagsrum_temperatur
+                  - entity: sensor.xiaomi_sovrum_temperatur
+                  - entity: sensor.xiaomi_ute_temperatur
+                show_icon: false
+                show_state: true
+                title: Temperatur
+                type: glance
+              - entities:
+                  - entity: light.vardagsrum
+                    icon: 'mdi:ceiling-light'
+                    name: Vardagsrum
+                    show_state: true
+                    tap_action:
+                      action: toggle
+                title: Lampor
+                type: glance
+            type: vertical-stack
+        type: horizontal-stack
+    icon: 'mdi:home'
+    id: home
+    panel: true
+    title: Home
+  - cards:
+      - cards:
+          - cards:
+              - entities:
+                  - entity: sensor.xiaomi_vardagsrum_temperatur
+                  - entity: sensor.xiaomi_vardagsrum_luftfuktighet
+                  - entity: sensor.xiaomi_vardagsrum_lufttryck
+                  - entity: sensor.xiaomi_vardagsrum_battery_level
+                title: Vardagsrum
+                columns: 1
+                show_state: true
+                show_icon: true
+                show_name: true
+                type: glance
+            type: vertical-stack
+          - cards:
+              - entities:
+                  - entity: sensor.xiaomi_sovrum_temperatur
+                  - entity: sensor.xiaomi_sovrum_luftfuktighet
+                  - entity: sensor.xiaomi_sovrum_lufttryck
+                  - entity: sensor.xiaomi_sovrum_battery_level
+                title: Sovrum
+                columns: 1
+                show_state: true
+                show_icon: true
+                show_name: true
+                type: glance
+            type: vertical-stack
+          - cards:                           
+              - entities:
+                  - entity: sensor.xiaomi_ute_temperatur
+                  - entity: sensor.xiaomi_ute_luftfuktighet
+                  - entity: sensor.xiaomi_ute_lufttryck
+                  - entity: sensor.xiaomi_ute_battery_level
+                title: Ute
+                columns: 1
+                show_state: true
+                show_icon: true
+                show_name: true
+                type: glance
+            type: vertical-stack
+        type: horizontal-stack
+    panel: true
+    title: Sensorer

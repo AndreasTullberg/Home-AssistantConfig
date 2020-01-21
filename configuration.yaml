@@ -1,0 +1,48 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# set Home Assistant to allow for yaml based text editor of lovelace
+#lovelace:
+#  Mode: yaml
+  
+# duckdns setting for remote access
+http:
+  base_url: !secret duckdns_base_url
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Zone configuration, this will override the default home zone
+zone:
+  - name: Hem
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
+    radius: 50
+    icon: mdi:home
+
+# asuswrt setup
+asuswrt:
+    host: !secret asus_router_IP
+    username: !secret asus_router_usr
+    password: !secret asus_router_pwd
+
+# Device tracker configuration for Asus Router
+device_tracker:
+  - platform: asuswrt
+    host: !secret asus_router_IP
+    username: !secret asus_router_usr
+    password: !secret asus_router_pwd
+    interval_seconds: 10
+    consider_home: 90
+    new_device_defaults:
+      track_new_devices: true
+      hide_if_away: false
