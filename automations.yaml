@@ -1,17 +1,3 @@
-- id: '1579788306045'
-  alias: Play music from spotify when i get home
-  description: ''
-  trigger:
-  - entity_id: person.andreas_tullberg
-    event: enter
-    platform: zone
-    zone: zone.home
-  condition: []
-  action:
-  - data:
-      media_content_id: spotify:track:7a3iXf8eqbwciDHZUbfQSQ
-    entity_id: media_player.kok
-    service: media_player.play_media
 - id: '1579963812582'
   alias: Turn on light in Douglas room
   description: Turns on weekdays at 06:45
