@@ -1,14 +1,49 @@
-- id: '1578865163548'
-  alias: turn on light when I am home
+- id: '1579788306045'
+  alias: Play music from spotify when i get home
   description: ''
   trigger:
-  - entity_id: device_tracker.andreas_tullberg_iphone
+  - entity_id: person.andreas_tullberg
     event: enter
     platform: zone
     zone: zone.home
   condition: []
   action:
-  - device_id: 885606c5671d43548b337084c43a3676
-    domain: light
-    entity_id: light.taklampa_vardagsrum
-    type: turn_on
+  - data:
+      media_content_id: spotify:track:7a3iXf8eqbwciDHZUbfQSQ
+    entity_id: media_player.kok
+    service: media_player.play_media
+- id: '1579963812582'
+  alias: Turn on light in Douglas room
+  description: Turns on weekdays at 06:45
+  trigger:
+  - at: 06:45
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - data:
+      entity_id: switch.shelly_douglas_taklampa
+    service: switch.turn_on
+- id: '1580476587513'
+  alias: Turn off light in Douglas room, weekdays
+  description: Turns off light in Douglas room weekdays at 8:15
+  trigger:
+  - at: 08:15
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - entity_id: switch.shelly_douglas_taklampa
+    service: switch.turn_off

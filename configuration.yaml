@@ -4,8 +4,14 @@ default_config:
 
 # set Home Assistant to allow for yaml based text editor of lovelace
 #lovelace:
-#  Mode: yaml
-  
+#  mode: yaml
+
+logger:
+  default: info
+  logs:
+   homeassistant.components.media_player.spotify: critical
+   homeassistant.components.media_player.kok: critical
+
 # duckdns setting for remote access
 http:
   base_url: !secret duckdns_base_url
@@ -42,7 +48,45 @@ device_tracker:
     username: !secret asus_router_usr
     password: !secret asus_router_pwd
     interval_seconds: 10
-    consider_home: 90
+    consider_home: 60
     new_device_defaults:
       track_new_devices: true
       hide_if_away: false
+
+# Spotify integration
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_ID
+    client_secret: !secret spotify_client_Secret
+    aliases: 
+        a8b1bd6e156c09490c17fa4034844bc1: 'Google Home Kök'
+        cd2b85b5d377702dbc962e950dc387e082a61a90: 'Andreas iPhone'
+        
+# Configuration of Shelly devices
+shelly:
+  cloud_auth_key: !secret shelly_cloud_auth_key
+  cloud_server: !secret shelly_cloud_server
+  
+# Verisure integration, doorlock, alarm etc
+verisure:
+  username: !secret verisure_usr
+  password: !secret verisure_pwd
+  
+# Home Connect appliances
+homeconnect:
+  client_id: !secret home_connect_id
+  client_secret: !secret home_connect_client_secret
+
+# System Monitor
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+
+
+
+
+
+      
