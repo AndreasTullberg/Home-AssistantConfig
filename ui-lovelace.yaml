@@ -1,3 +1,9 @@
+resources:
+  - type: module
+    url: /community_plugin/spotify-card/spotify-card.js
+  - type: module
+    url: >-
+      https://cdn.jsdelivr.net/gh/custom-cards/spotify-card@1.8/dist/spotify-card.umd.js
 title: Tullbergs Hem
 views:
   - cards:
@@ -5,31 +11,63 @@ views:
           - cards:
               - entity: media_player.kok
                 type: media-control
+              - entity: media_player.spotify
+                type: media-control
+              - entities:
+                  - entity: switch.diskmaskin
+                  - entity: binary_sensor.diskmaskin_door
+                  - entity: sensor.diskmaskin_remaining_program_time
+                  - entity: sensor.diskmaskin_program_progress
+                title: Diskmaskin
+                type: glance
             type: vertical-stack
           - cards:
               - entity: weather.hem
                 type: weather-forecast
+              - entities:
+                  - entity: binary_sensor.verisure_ethernet_status
+                  - entity: alarm_control_panel.gavlegatan_alarm
+                  - entity: lock.ytterdorr
+                title: Verisure
+                type: glance
             type: vertical-stack
           - cards:
               - entities:
-                  - entity: person.andreas_tullberg
-                  - entity: person.ulrikas
-                  - entity: person.douglas
-                  - entity: person.elsa
+                  - entity: device_tracker.andreas_tullberg_iphone
+                    icon: 'mdi:human-male'
+                    name: Andreas
+                  - entity: device_tracker.ulrikas_iphone
+                    icon: 'mdi:human-female'
+                    name: Ulrika
+                  - entity: device_tracker.douglas_iphone
+                    icon: 'mdi:human-child'
+                    name: Douglas
+                  - entity: device_tracker.elsas_iphone
+                    icon: 'mdi:human-child'
+                    name: Elsa
                 title: Familjen
                 type: glance
               - entities:
                   - entity: sensor.xiaomi_vardagsrum_temperatur
+                    name: Vardagsrum
                   - entity: sensor.xiaomi_sovrum_temperatur
+                    name: Sovrum
                   - entity: sensor.xiaomi_ute_temperatur
+                    name: Ute
                 show_icon: false
                 show_state: true
                 title: Temperatur
                 type: glance
               - entities:
-                  - entity: light.vardagsrum
+                  - entity: light.taklampa_arbetsrum
                     icon: 'mdi:ceiling-light'
-                    name: Vardagsrum
+                    name: Arbetsrum
+                    show_state: true
+                    tap_action:
+                      action: toggle
+                  - entity: switch.shelly_douglas_taklampa
+                    icon: 'mdi:ceiling-light'
+                    name: Douglas taklampa
                     show_state: true
                     tap_action:
                       action: toggle
@@ -40,48 +78,90 @@ views:
     icon: 'mdi:home'
     id: home
     panel: true
-    title: Home
+    title: Hem
   - cards:
       - cards:
           - cards:
-              - entities:
+              - columns: 1
+                entities:
                   - entity: sensor.xiaomi_vardagsrum_temperatur
                   - entity: sensor.xiaomi_vardagsrum_luftfuktighet
                   - entity: sensor.xiaomi_vardagsrum_lufttryck
                   - entity: sensor.xiaomi_vardagsrum_battery_level
-                title: Vardagsrum
-                columns: 1
-                show_state: true
                 show_icon: true
                 show_name: true
+                show_state: true
+                title: Vardagsrum
                 type: glance
             type: vertical-stack
           - cards:
-              - entities:
+              - columns: 1
+                entities:
                   - entity: sensor.xiaomi_sovrum_temperatur
                   - entity: sensor.xiaomi_sovrum_luftfuktighet
                   - entity: sensor.xiaomi_sovrum_lufttryck
                   - entity: sensor.xiaomi_sovrum_battery_level
-                title: Sovrum
-                columns: 1
-                show_state: true
                 show_icon: true
                 show_name: true
+                show_state: true
+                title: Sovrum
                 type: glance
             type: vertical-stack
-          - cards:                           
-              - entities:
+          - cards:
+              - columns: 1
+                entities:
                   - entity: sensor.xiaomi_ute_temperatur
                   - entity: sensor.xiaomi_ute_luftfuktighet
                   - entity: sensor.xiaomi_ute_lufttryck
                   - entity: sensor.xiaomi_ute_battery_level
-                title: Ute
-                columns: 1
-                show_state: true
                 show_icon: true
                 show_name: true
+                show_state: true
+                title: Ute
                 type: glance
             type: vertical-stack
         type: horizontal-stack
+    icon: 'mdi:home-thermometer'
     panel: true
     title: Sensorer
+  - path: test
+    title: System Status
+    icon: 'mdi:view-dashboard-variant'
+    badges: []
+    cards:
+      - detail: 2
+        entity: sensor.disk_use_percent_home
+        graph: line
+        type: sensor
+      - entities:
+          - entity: sensor.hacs
+          - entity: sensor.last_boot
+          - entity: sensor.memory_use_percent
+          - entity: sensor.memory_free
+          - entity: sensor.memory_use
+          - entity: sensor.disk_use_percent_home
+          - entity: sensor.cpu_temperature
+        title: System Status
+        type: glance
+      - type: gauge
+        entity: sensor.cpu_temperature
+        min: 0
+        max: 100
+        theme: default
+        severity:
+          green: 0
+          yellow: 60
+          red: 100
+        name: CPU temperatur
+      - type: history-graph
+        entities:
+          - entity: sensor.cpu_temperature
+        hours_to_show: 24
+        refresh_interval: 0
+        title: CPU Temperatur (Historik)
+  - cards:
+      - client_id: ae141c0a5c41486d9fcabc8f6f8393e0
+        type: 'custom:spotify-card'
+      - entity: media_player.spotify
+        type: media-control
+    title: Media
